@@ -1,4 +1,4 @@
-const CACHE = "schedule-108-v1";
+const CACHE = "schedule-108-v2";
 const ASSETS = ["./", "index.html", "style.css", "app.js", "data.js", "manifest.json", "icons/icon-192.png", "icons/icon-512.png"];
 
 self.addEventListener("install", (e) => {

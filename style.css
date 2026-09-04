@@ -245,6 +245,74 @@ footer{
   margin-top: 24px;
 }
 
+.fullscreen-btn{
+  margin-top: 14px;
+  width: 100%;
+  background: rgba(255,255,255,0.08);
+  color: #F0EEE4;
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+/* ---------- Fullscreen countdown ---------- */
+.fs-overlay{
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--ink-deep);
+  color: #F5F1E6;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+}
+.fs-overlay.active{ display: flex; }
+
+.fs-exit{
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #F5F1E6;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.fs-tag{
+  font-size: clamp(14px, 2.4vw, 20px);
+  color: var(--mustard);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.fs-subject{
+  font-family: "Noto Serif TC", serif;
+  font-weight: 700;
+  font-size: clamp(24px, 5vw, 44px);
+  margin-bottom: 18px;
+}
+.fs-countdown{
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: clamp(72px, 22vw, 200px);
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+.fs-sub{
+  margin-top: 18px;
+  font-size: clamp(13px, 2vw, 18px);
+  color: #B9C0D4;
+}
+
 @media (min-width: 640px){
   body{ max-width: 640px; margin: 0 auto; }
 }

@@ -256,6 +256,72 @@ notifyBtn.addEventListener("click", () => {
   }
 });
 
+// ---------- 全螢幕橫向倒數 ----------
+const fsOverlay = document.getElementById("fsOverlay");
+const fsTag = document.getElementById("fsTag");
+const fsSubject = document.getElementById("fsSubject");
+const fsCountdown = document.getElementById("fsCountdown");
+const fsSub = document.getElementById("fsSub");
+const fullscreenBtn = document.getElementById("fullscreenBtn");
+const fsExitBtn = document.getElementById("fsExitBtn");
+
+function renderFullscreen(status, now) {
+  if (!fsOverlay.classList.contains("active")) return;
+  const { current, next } = status;
+
+  if (current) {
+    fsTag.textContent = current.period.label + " 上課中";
+    fsSubject.textContent = current.subject + (current.teacher ? "　" + current.teacher : "");
+    const endMin = timeToMinutes(current.period.end);
+    const nowMin = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+    const remainSec = Math.max(0, Math.round((endMin - nowMin) * 60));
+    fsCountdown.textContent = formatCountdown(remainSec);
+    fsSub.textContent = next ? `下一節：${next.subject}` : "";
+  } else if (status.dow >= 1 && status.dow <= 5 && next && next.wd === status.dow) {
+    fsTag.textContent = "下課 / 空堂";
+    fsSubject.textContent = "等待 " + next.subject;
+    const startMin = timeToMinutes(next.period.start);
+    const nowMin = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+    const remainSec = Math.max(0, Math.round((startMin - nowMin) * 60));
+    fsCountdown.textContent = formatCountdown(remainSec);
+    fsSub.textContent = `${next.period.label}　${next.period.start}`;
+  } else {
+    fsTag.textContent = next ? "下次上課" : "";
+    fsSubject.textContent = next ? next.subject : "沒有課程";
+    fsCountdown.textContent = "--:--";
+    fsSub.textContent = next ? `${weekdayText(next.wd)} ${next.period.label} ${next.period.start}` : "";
+  }
+}
+
+async function enterFullscreenCountdown() {
+  fsOverlay.classList.add("active");
+  try {
+    if (fsOverlay.requestFullscreen) await fsOverlay.requestFullscreen();
+  } catch (e) {
+    /* 全螢幕被拒絕也沒關係，覆蓋層仍會顯示 */
+  }
+  try {
+    if (screen.orientation && screen.orientation.lock) await screen.orientation.lock("landscape");
+  } catch (e) {
+    /* 部分瀏覽器（例如 iOS Safari）不支援鎖定方向，使用者需自行轉動手機 */
+  }
+  tick();
+}
+
+function exitFullscreenCountdown() {
+  fsOverlay.classList.remove("active");
+  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  try {
+    if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock();
+  } catch (e) {}
+}
+
+fullscreenBtn.addEventListener("click", enterFullscreenCountdown);
+fsExitBtn.addEventListener("click", exitFullscreenCountdown);
+document.addEventListener("fullscreenchange", () => {
+  if (!document.fullscreenElement) exitFullscreenCountdown();
+});
+
 // ---------- 主更新迴圈 ----------
 function tick() {
   const now = new Date();
@@ -263,6 +329,7 @@ function tick() {
   renderHero(status, now);
   renderNextStrip(status);
   renderTable(status);
+  renderFullscreen(status, now);
 }
 
 function init() {
