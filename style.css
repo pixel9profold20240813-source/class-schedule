@@ -287,6 +287,17 @@ footer{
   line-height: 1;
 }
 
+.fs-clock{
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: clamp(18px, 3vw, 28px);
+  color: #D6DBEA;
+  letter-spacing: 0.03em;
+}
+
 .fs-tag{
   font-size: clamp(14px, 2.4vw, 20px);
   color: var(--mustard);

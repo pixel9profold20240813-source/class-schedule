@@ -18,7 +18,10 @@
 
 <header class="hero" id="hero">
   <div class="hero-top">
-    <span class="school-name">桃園市立陽明高級中等學校 108班</span>
+    <div class="hero-top-left">
+      <span class="clock" id="clock">00:00:00</span>
+      <span class="school-name">桃園市立陽明高級中等學校 108班</span>
+    </div>
     <button id="notifyBtn" class="notify-btn" aria-label="開啟通知">🔔 開啟通知</button>
   </div>
 
@@ -38,6 +41,7 @@
 </header>
 
 <div id="fsOverlay" class="fs-overlay">
+  <div class="fs-clock" id="fsClock">00:00:00</div>
   <button id="fsExitBtn" class="fs-exit">✕</button>
   <div class="fs-tag" id="fsTag">現在</div>
   <div class="fs-subject" id="fsSubject">—</div>

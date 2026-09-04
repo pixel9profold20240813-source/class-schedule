@@ -262,12 +262,20 @@ const fsTag = document.getElementById("fsTag");
 const fsSubject = document.getElementById("fsSubject");
 const fsCountdown = document.getElementById("fsCountdown");
 const fsSub = document.getElementById("fsSub");
+const fsClock = document.getElementById("fsClock");
 const fullscreenBtn = document.getElementById("fullscreenBtn");
 const fsExitBtn = document.getElementById("fsExitBtn");
 
 function renderFullscreen(status, now) {
   if (!fsOverlay.classList.contains("active")) return;
   const { current, next } = status;
+
+  fsClock.textContent =
+    String(now.getHours()).padStart(2, "0") +
+    ":" +
+    String(now.getMinutes()).padStart(2, "0") +
+    ":" +
+    String(now.getSeconds()).padStart(2, "0");
 
   if (current) {
     fsTag.textContent = current.period.label + " 上課中";
